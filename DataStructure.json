@@ -1,0 +1,31 @@
+{
+	"dataStructure":[
+		{
+			"rank":0,
+			"dbName":"crud",
+			"tables":[
+				{
+					"rank":1,
+					"tableName":"test",
+					"cols":[
+						{
+							"rank":2,
+							"colName":"id",
+							"dataType":"varchar"
+						},
+						{
+							"rank":3,
+							"colName":"content1",
+							"dataType":"varchar"
+						},
+						{
+							"rank":4,
+							"colName":"content2",
+							"dataType":"varchar"
+						}
+					]
+				}
+			]
+		}
+	]
+}
