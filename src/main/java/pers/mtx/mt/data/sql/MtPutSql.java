@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class MtPutSql {
     public static String spliceSql(PutParams params) {
-        System.out.println(params);
+        //System.out.println(params);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("update ");
         stringBuilder.append(params.getDbName()).append(".").append(params.getTbName()).append(" set ");
@@ -39,7 +39,7 @@ public class MtPutSql {
     }
     public static String formatValue(String rank, String value) {
         String type = Root.getColType(Integer.valueOf(rank));
-        System.out.println(rank + ";" + value + ";" + type);
+        //System.out.println(rank + ";" + value + ";" + type);
         if (type.equals("varchar")) return "'" + value + "'";
         return value;
     }

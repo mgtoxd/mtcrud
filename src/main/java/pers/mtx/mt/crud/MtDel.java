@@ -29,7 +29,7 @@ public class MtDel implements Crud {
             statement.executeUpdate(sql);
             return "t";
         }catch (Exception e){
-            System.out.println(e);
+            //System.out.println(e);
             return "f";
         }finally {
             poolConnection.releaseConnect();
@@ -48,7 +48,7 @@ public class MtDel implements Crud {
 
     public static String formatValue(String rank,String value){
         String type = Root.getColType(Integer.valueOf(rank));
-        System.out.println(rank+";"+value+";"+type);
+        //System.out.println(rank+";"+value+";"+type);
         if (type.equals("varchar")) return "'"+value+"'";
         return value;
     }

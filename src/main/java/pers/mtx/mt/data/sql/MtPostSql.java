@@ -39,7 +39,7 @@ public class MtPostSql {
 
     public static String formatValue(String rank,String value){
         String type = Root.getColType(Integer.valueOf(rank));
-        System.out.println(rank+";"+value+";"+type);
+        //System.out.println(rank+";"+value+";"+type);
         if (type.equals("varchar")) return "'"+value+"'";
         return value;
     }

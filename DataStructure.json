@@ -10,17 +10,17 @@
 					"cols":[
 						{
 							"rank":2,
-							"colName":"id",
-							"dataType":"varchar"
-						},
-						{
-							"rank":3,
 							"colName":"content1",
 							"dataType":"varchar"
 						},
 						{
-							"rank":4,
+							"rank":3,
 							"colName":"content2",
+							"dataType":"varchar"
+						},
+						{
+							"rank":4,
+							"colName":"id",
 							"dataType":"varchar"
 						}
 					]

@@ -3,14 +3,14 @@ package pers.mtx.mt.crud;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import pers.mtx.connect.DataSourceImpl;
-import pers.mtx.format.JsonUtil;
+import pers.mtx.connect.PoolConnection;
+import pers.mtx.util.JsonUtil;
 import pers.mtx.init.entity.Root;
 import pers.mtx.mt.Crud;
 import pers.mtx.mt.data.sql.MtGetSql;
 import pers.mtx.mt.data.sql.entity.GetParams;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -31,17 +31,24 @@ public class MtGet implements Crud {
 
         value.setCols(cols);
 
-        System.out.println("test"+value.toString());
+        //System.out.println("test"+value.toString());
         JsonNode jsonNode = mapper.readTree(content);
 
-        System.out.println(value.toString());
-        System.out.println();
-        Connection connect = new DataSourceImpl().getDataSource().getConnect();
-        Statement statement = connect.createStatement();
+        //System.out.println(value.toString());
+        //System.out.println();
+        PoolConnection connection = DataSourceImpl.getConnection();
+        Statement statement = connection.getConnect().createStatement();
         String sql = MtGetSql.spliceSql(value);
-        System.out.println(sql);
-        ResultSet resultSet = statement.executeQuery(sql);
-        return JsonUtil.resultSetToJson(resultSet);
+        //System.out.println(sql);
+        try {
+            ResultSet resultSet = statement.executeQuery(sql);
+            return JsonUtil.resultSetToJson(resultSet);
+        }catch (Exception e){
+            return e.getMessage();
+        }finally {
+            connection.releaseConnect();
+        }
+
     }
 
 

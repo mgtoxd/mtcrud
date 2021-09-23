@@ -1,13 +1,9 @@
 package pers.mtx.init;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import pers.mtx.connect.DataSourceImpl;
 import pers.mtx.connect.PoolConnection;
-import pers.mtx.format.JsonUtil;
+import pers.mtx.util.JsonUtil;
 import pers.mtx.init.entity.*;
 
 import java.io.BufferedWriter;
@@ -15,11 +11,8 @@ import java.io.FileWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class DataStructure {
@@ -32,7 +25,7 @@ public class DataStructure {
 
 
     {
-        System.out.println("aaaaa");
+        //System.out.println("aaaaa");
         poolConnection = DataSourceImpl.getConnection();
         connect =poolConnection.getConnect();
         mapper = new ObjectMapper();
@@ -45,7 +38,7 @@ public class DataStructure {
     }
 
     public void getDataStructure() throws Exception {
-        System.out.println("adaaa");
+        //System.out.println("adaaa");
         //获取数据库名称列表
         PreparedStatement statement = connect.prepareStatement("select TABLE_SCHEMA as db,TABLE_NAME as tb,COLUMN_NAME as col,DATA_TYPE as data from information_schema.COLUMNS where TABLE_SCHEMA in (select SCHEMA_NAME from information_schema.SCHEMATA where SCHEMA_NAME != 'mysql' and SCHEMA_NAME !='information_schema' and SCHEMA_NAME != 'performance_schema' and SCHEMA_NAME != 'sys')");
         ResultSet resultSet = statement.executeQuery();
@@ -81,14 +74,14 @@ public class DataStructure {
                 Collections.addAll(Root.getNodeArrayList(),db1,tb1,col1);
             }
         }
-        System.out.println("dwada");
-        System.out.println(mapper.writeValueAsString(root));
-        System.out.println();
+        //System.out.println("dwada");
+        //System.out.println(mapper.writeValueAsString(root));
+        //System.out.println();
 
         BufferedWriter out = new BufferedWriter(new FileWriter("./DataStructure.json"));
         out.write(JsonUtil.formatJson(mapper.writeValueAsString(root)));
         out.close();
-        System.out.println("文件创建成功！");
+        //System.out.println("文件创建成功！");
         poolConnection.releaseConnect();
     }
 

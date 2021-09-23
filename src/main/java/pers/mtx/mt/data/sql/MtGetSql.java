@@ -42,7 +42,7 @@ public class MtGetSql {
         sb.append(" order by ");
         params.forEach((key, value) -> {
             sb.append("`").append(Root.getNodeName(Integer.valueOf(key))).append("`");
-            System.out.println(value);
+            //System.out.println(value);
             if (value.equals("A")) {
                 sb.append(" ASC");
             }else {
@@ -54,7 +54,7 @@ public class MtGetSql {
 
     public static String formatValue(String rank,String value){
         String type = Root.getColType(Integer.valueOf(rank));
-        System.out.println(rank+";"+value+";"+type);
+        //System.out.println(rank+";"+value+";"+type);
         if (type.equals("varchar")) return "'"+value+"'";
         return value;
     }

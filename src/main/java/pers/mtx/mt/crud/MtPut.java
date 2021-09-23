@@ -28,12 +28,12 @@ public class MtPut implements Crud {
         PoolConnection connection = DataSourceImpl.getConnection();
         Connection connect = connection.getConnect();
         Statement statement = connect.createStatement();
-        System.out.println(sql);
+        //System.out.println(sql);
         try {
             statement.executeUpdate(sql);
             return "t";
         }catch (Exception e){
-            System.out.println(e);
+            //System.out.println(e);
             return "f";
         }finally {
             connection.releaseConnect();

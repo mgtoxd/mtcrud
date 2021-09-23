@@ -26,14 +26,14 @@ public class MtPost implements Crud {
         //解析uri
 
         String[] split = uri.replaceFirst("/mt/","").split("/");
-        System.out.println(Arrays.toString(content));
+        //System.out.println(Arrays.toString(content));
         PostParams postParams = mapper.readValue(content, PostParams.class);
         postParams.setDbName(Root.getNodeName(Integer.valueOf(split[0])));
         postParams.setTbName(Root.getNodeName(Integer.valueOf(split[1])));
-        System.out.println(postParams);
+        //System.out.println(postParams);
         String sql = MtPostSql.spliceSql(postParams);
-        System.out.println("da");
-        System.out.println(sql);
+        //System.out.println("da");
+        //System.out.println(sql);
         PoolConnection poolCon = DataSourceImpl.getConnection();
         Connection connection = poolCon.getConnect();
         Statement statement = connection.createStatement();
@@ -41,7 +41,7 @@ public class MtPost implements Crud {
             statement.executeUpdate(sql);
             return "t";
         }catch (Exception e){
-            System.out.println(e);
+            //System.out.println(e);
             return "f";
         }finally {
             poolCon.releaseConnect();

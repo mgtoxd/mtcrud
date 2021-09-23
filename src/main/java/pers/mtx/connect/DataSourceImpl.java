@@ -1,5 +1,7 @@
 package pers.mtx.connect;
 
+import pers.mtx.util.YmlUtil;
+
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -22,17 +24,26 @@ public class DataSourceImpl implements DataSource {
 
 
     //定义数据库连接属性
-    private final static String DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
-    private final static String URL = "jdbc:mysql://localhost:3306/crud";
-    private final static String USERNAME = "root";
-    private final static String PASSWORD = "mtx990812";
+    private static final String DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
+    private static String URL = "jdbc:mysql://localhost:3306/crud";
+    private static String USERNAME = "root";
+    private static String PASSWORD = "mtx990812";
 
     //定义默认连接池属性配置
-    private int initSize = 2;
-    private int maxSize = 4;
-    private int stepSize = 1;
-    private int timeout = 2000;
+    private static int initSize = 2;
+    private static int maxSize = 4;
+    private static int stepSize = 1;
+    private static int timeout = 2000;
 
+    static {
+        URL = YmlUtil.getSetting().getData().getUrl();
+        USERNAME = YmlUtil.getSetting().getData().getUsername();
+        PASSWORD = YmlUtil.getSetting().getData().getPassword();
+        initSize = YmlUtil.getSetting().getData().getInitSize();
+        maxSize = YmlUtil.getSetting().getData().getMaxSize();
+        stepSize = YmlUtil.getSetting().getData().getStepSize();
+        timeout = YmlUtil.getSetting().getData().getTimeout();
+    }
 
     public DataSourceImpl() {
         initPool();
@@ -44,15 +55,15 @@ public class DataSourceImpl implements DataSource {
 
     //初始化连接池
     private void initPool() {
-        String init = null;
-        String step = null;
-        String max = null;
-        String time = null;
+//        String init = null;
+//        String step = null;
+//        String max = null;
+//        String time = null;
 
-        initSize = init == null ? initSize : Integer.parseInt(init);
-        maxSize = max == null ? maxSize : Integer.parseInt(max);
-        stepSize = step == null ? stepSize : Integer.parseInt(step);
-        timeout = time == null ? timeout : Integer.parseInt(time);
+//        initSize = init == null ? initSize : Integer.parseInt(init);
+//        maxSize = max == null ? maxSize : Integer.parseInt(max);
+//        stepSize = step == null ? stepSize : Integer.parseInt(step);
+//        timeout = time == null ? timeout : Integer.parseInt(time);
 
         try {
             //加载驱动
@@ -82,7 +93,7 @@ public class DataSourceImpl implements DataSource {
 
             //没有可用连接对象时，等待连接对象的释放或者创建新的连接对象使用
             while (poolConnection == null) {
-                System.out.println("---------------等待连接---------------");
+                //System.out.println("---------------等待连接---------------");
                 createConnection(stepSize);
                 poolConnection = getAvailableConnection();
 
@@ -104,7 +115,7 @@ public class DataSourceImpl implements DataSource {
     private void createConnection(int count) throws SQLException {
         if (list.size() + count <= maxSize) {
             for (int i = 0; i < count; i++) {
-                System.out.println("初始化了" + (i + 1) + "个连接");
+                //System.out.println("初始化了" + (i + 1) + "个连接");
                 Connection connect = DriverManager.getConnection(URL, USERNAME, PASSWORD);
                 PoolConnection pool = new PoolConnection(connect, true);
                 list.add(pool);

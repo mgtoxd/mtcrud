@@ -1,6 +1,5 @@
 package pers.mtx.init.entity;
 
-import com.sun.istack.internal.Nullable;
 import lombok.Data;
 
 import java.util.ArrayList;

@@ -19,15 +19,17 @@ public class filterHandler extends ChannelInboundHandlerAdapter{
         String uri = fullRequest.uri();
         byte[] bytes1 = new byte[fullRequest.content().readableBytes()];
         fullRequest.content().readBytes(bytes1);
+        fullRequest.content().release();
         if (uri.indexOf("/mt")==0){
             //进入默认crud
-            System.out.println("mt");
+            //System.out.println("mt");
             Crud crud = CrudFactory.getCrud(fullRequest.method());
             DefaultFullHttpResponse response = new DefaultFullHttpResponse(fullRequest.protocolVersion(), HttpResponseStatus.OK);
             byte[] bytes = crud.make(uri, bytes1).getBytes(StandardCharsets.UTF_8);
             response.headers().set(CONTENT_LENGTH,bytes.length);
             response.content().writeBytes(bytes);
             ctx.writeAndFlush(response);
+            ctx.close();
         }else {
             //转发到相应接口
             DefaultFullHttpResponse response = new DefaultFullHttpResponse(fullRequest.protocolVersion(), HttpResponseStatus.OK);
@@ -35,6 +37,7 @@ public class filterHandler extends ChannelInboundHandlerAdapter{
             response.headers().set(CONTENT_LENGTH,bytes.length);
             response.content().writeBytes(bytes);
             ctx.writeAndFlush(response);
+            ctx.close();
         }
     }
 }

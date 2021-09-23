@@ -33,7 +33,7 @@ public class PoolConnection {
 	
 	//释放连接池中的连接对象
 	public void releaseConnect(){
-		System.out.println("-----------释放连接-----------");
+		//System.out.println("-----------释放连接-----------");
 		this.status = true;
 	}
 	
