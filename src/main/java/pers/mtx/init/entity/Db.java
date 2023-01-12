@@ -6,6 +6,10 @@ import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
 
+
+/**
+ * 数据库中库的属性类
+ */
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @Data
@@ -16,7 +20,7 @@ public class Db extends INode {
     public Db(String dbName,Integer rank) {
         this.dbName = dbName;
         this.rank = rank;
-        this.tables = new ArrayList<Tb>();
+        this.tables = new ArrayList<>();
     }
 
     @Override
@@ -24,8 +28,4 @@ public class Db extends INode {
         return getDbName();
     }
 
-    @Override
-    public ArrayList<? extends INode> mgetList() {
-        return getTables();
-    }
 }

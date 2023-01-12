@@ -8,40 +8,19 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * JSON 工具类
+ */
 public class JsonUtil {
-    public static void jsonLeaf(JsonNode node)
-    {
-        if (node.isValueNode())
-        {
-            //System.out.println(node.toString());
-            return;
-        }
 
-        if (node.isObject())
-        {
-            Iterator<Map.Entry<String, JsonNode>> it = node.fields();
-            while (it.hasNext())
-            {
-                Map.Entry<String, JsonNode> entry = it.next();
-                //System.out.println(entry.getKey());
-                jsonLeaf(entry.getValue());
-            }
-        }
-
-        if (node.isArray())
-        {
-            Iterator<JsonNode> it = node.iterator();
-            while (it.hasNext())
-            {
-                jsonLeaf(it.next());
-            }
-        }
-    }
-
+    /**
+     * 格式化JSON 使易读
+     * @param str 待格式化json
+     * @return 带有换行等的json
+     */
     public static String formatJson(String str){
         StringBuilder builder = new StringBuilder(str);
         int tab = 0;
@@ -73,6 +52,11 @@ public class JsonUtil {
         return builder.toString();
     }
 
+    /**
+     * ResultSet转JSON
+     * @param resultSet rs
+     * @return Json 字符串
+     */
     public static String resultSetToJson(ResultSet resultSet) throws SQLException {
         ObjectMapper mapper = new ObjectMapper();
         ArrayNode arrayNode = mapper.createArrayNode();

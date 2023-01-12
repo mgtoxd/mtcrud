@@ -3,11 +3,14 @@ package pers.mtx.init.entity;
 import lombok.Data;
 
 import java.util.ArrayList;
-import java.util.List;
 
+
+/**
+ * 存储所有数据库结构的根节点
+ */
 @Data
 public class Root {
-    private static ArrayList<Db> DataStructure=new ArrayList<Db>();
+    private static ArrayList<Db> DataStructure= new ArrayList<>();
     private static ArrayList<INode> nodeArrayList = new ArrayList<>();
     private static Root root = new Root();
 
@@ -22,15 +25,15 @@ public class Root {
         return root;
     }
     public static String getNodeName(Integer rank){
-        for (int i = 0; i < nodeArrayList.size(); i++) {
-            if (rank==nodeArrayList.get(i).rank) return nodeArrayList.get(i).mgetMark();
+        for (INode iNode : nodeArrayList) {
+            if (rank == iNode.rank) return iNode.mgetMark();
         }
         return null;
     }
 
     public static String getColType(Integer rank){
-        for (int i = 0; i < nodeArrayList.size(); i++) {
-            if (rank==nodeArrayList.get(i).rank) return ((Col)nodeArrayList.get(i)).getDataType();
+        for (INode iNode : nodeArrayList) {
+            if (rank == iNode.rank) return ((Col) iNode).getDataType();
         }
         return null;
     }

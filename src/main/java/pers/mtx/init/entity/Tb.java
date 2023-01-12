@@ -16,7 +16,7 @@ public class Tb extends INode {
     public Tb(String tableName,Integer rank) {
         this.rank = rank;
         this.tableName = tableName;
-        this.cols = new ArrayList<Col>();
+        this.cols = new ArrayList<>();
     }
 
     @Override
@@ -24,8 +24,4 @@ public class Tb extends INode {
         return getTableName();
     }
 
-    @Override
-    public ArrayList<? extends INode> mgetList() {
-        return getCols();
-    }
 }

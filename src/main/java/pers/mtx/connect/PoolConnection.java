@@ -2,17 +2,18 @@ package pers.mtx.connect;
 
 import java.sql.Connection;
 
+
+/**
+ * 数据库连接属性类
+ */
 public class PoolConnection {
 	
 	private Connection connect;
+
 	//false--繁忙，true--空闲
 	private boolean status;
-	
 
-	public PoolConnection() {
-		
-	}
-	
+
 	public PoolConnection(Connection connect, boolean status) {
 		this.connect = connect;
 		this.status = status;
@@ -33,7 +34,6 @@ public class PoolConnection {
 	
 	//释放连接池中的连接对象
 	public void releaseConnect(){
-		//System.out.println("-----------释放连接-----------");
 		this.status = true;
 	}
 	

@@ -12,28 +12,32 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
+
+/**
+ * 连接池具体实现类
+ */
 public class DataSourceImpl implements DataSource {
 
-    private static DataSourceImpl dataSource = new DataSourceImpl();
-    private ReentrantLock lock = new ReentrantLock();
+    private static final DataSourceImpl dataSource = new DataSourceImpl();
+    private final ReentrantLock lock = new ReentrantLock();
 
 
 
     //定义连接池中连接对象的存储容器
-    private List<PoolConnection> list = Collections.synchronizedList(new ArrayList<>());
+    private final List<PoolConnection> list = Collections.synchronizedList(new ArrayList<>());
 
 
     //定义数据库连接属性
     private static final String DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
-    private static String URL = "jdbc:mysql://localhost:3306/crud";
-    private static String USERNAME = "root";
-    private static String PASSWORD = "mtx990812";
+    private static final String URL;
+    private static final String USERNAME;
+    private static final String PASSWORD;
 
     //定义默认连接池属性配置
-    private static int initSize = 2;
-    private static int maxSize = 4;
-    private static int stepSize = 1;
-    private static int timeout = 2000;
+    private static final int initSize;
+    private static final int maxSize;
+    private static final int stepSize;
+    private static final int timeout;
 
     static {
         URL = YmlUtil.getSetting().getData().getUrl();
@@ -55,16 +59,6 @@ public class DataSourceImpl implements DataSource {
 
     //初始化连接池
     private void initPool() {
-//        String init = null;
-//        String step = null;
-//        String max = null;
-//        String time = null;
-
-//        initSize = init == null ? initSize : Integer.parseInt(init);
-//        maxSize = max == null ? maxSize : Integer.parseInt(max);
-//        stepSize = step == null ? stepSize : Integer.parseInt(step);
-//        timeout = time == null ? timeout : Integer.parseInt(time);
-
         try {
             //加载驱动
             Driver driver = (Driver) Class.forName(DRIVER_CLASS).newInstance();
@@ -79,15 +73,12 @@ public class DataSourceImpl implements DataSource {
     @Override
     public PoolConnection getDataSource() {
         PoolConnection poolConnection = null;
-
         try {
             lock.lock();
-
             //连接池对象为空时，初始化连接对象
             if (list.size() == 0) {
                 createConnection(initSize);
             }
-
             //获取可用连接对象
             poolConnection = getAvailableConnection();
 
@@ -101,7 +92,6 @@ public class DataSourceImpl implements DataSource {
                     TimeUnit.MILLISECONDS.sleep(30);
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -115,7 +105,6 @@ public class DataSourceImpl implements DataSource {
     private void createConnection(int count) throws SQLException {
         if (list.size() + count <= maxSize) {
             for (int i = 0; i < count; i++) {
-                //System.out.println("初始化了" + (i + 1) + "个连接");
                 Connection connect = DriverManager.getConnection(URL, USERNAME, PASSWORD);
                 PoolConnection pool = new PoolConnection(connect, true);
                 list.add(pool);

@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.ArrayList;
 
+/**
+ * 数据库中列的属性类
+ */
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @Data
@@ -24,8 +26,4 @@ public class Col extends INode {
         return getColName();
     }
 
-    @Override
-    public ArrayList<? extends INode> mgetList() {
-        return null;
-    }
 }

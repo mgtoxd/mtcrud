@@ -16,29 +16,22 @@ import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class DataStructure {
-    private ObjectMapper mapper;
+    private final ObjectMapper mapper;
+    private final PoolConnection poolConnection;
 
-    private ArrayList<String> defaultSchemaNameList;
-    private PoolConnection poolConnection;
-
-    private Connection connect;
+    private final Connection connect;
 
 
     {
-        //System.out.println("aaaaa");
         poolConnection = DataSourceImpl.getConnection();
         connect =poolConnection.getConnect();
         mapper = new ObjectMapper();
-        defaultSchemaNameList = new ArrayList<String>(){{
-            add("mysql");
-            add("information_schema");
-            add("performance_schema");
-            add("sys");
-        }};
     }
 
+    /**
+     * 从数据库中获取所有列的信息，存储在Root单例类并且写入到DataStructure.json
+     */
     public void getDataStructure() throws Exception {
-        //System.out.println("adaaa");
         //获取数据库名称列表
         PreparedStatement statement = connect.prepareStatement("select TABLE_SCHEMA as db,TABLE_NAME as tb,COLUMN_NAME as col,DATA_TYPE as data from information_schema.COLUMNS where TABLE_SCHEMA in (select SCHEMA_NAME from information_schema.SCHEMATA where SCHEMA_NAME != 'mysql' and SCHEMA_NAME !='information_schema' and SCHEMA_NAME != 'performance_schema' and SCHEMA_NAME != 'sys')");
         ResultSet resultSet = statement.executeQuery();
@@ -74,24 +67,20 @@ public class DataStructure {
                 Collections.addAll(Root.getNodeArrayList(),db1,tb1,col1);
             }
         }
-        //System.out.println("dwada");
-        //System.out.println(mapper.writeValueAsString(root));
-        //System.out.println();
 
         BufferedWriter out = new BufferedWriter(new FileWriter("./DataStructure.json"));
         out.write(JsonUtil.formatJson(mapper.writeValueAsString(root)));
         out.close();
-        //System.out.println("文件创建成功！");
         poolConnection.releaseConnect();
     }
 
     /**
      * 判断是否存在该INode，存在则返回已有的，不存在返回null对象
      * @param list INode列表
-     * @param mark
-     * @return
+     * @param mark 节点名
+     * @return 节点
      */
-    public INode getDbObject(ArrayList<? extends INode> list, String mark) throws Exception {
+    public INode getDbObject(ArrayList<? extends INode> list, String mark) {
         if (list==null) return null;
         return list.stream().filter(e -> e.mgetMark().equals(mark)).findAny().orElse(null);
     }

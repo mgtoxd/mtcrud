@@ -6,6 +6,10 @@ import pers.mtx.util.setting.Setting;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+
+/**
+ * 加载YML
+ */
 public class YmlUtil {
     protected YmlUtil() {
     }

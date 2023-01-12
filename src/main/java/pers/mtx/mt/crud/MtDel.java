@@ -7,25 +7,45 @@ import pers.mtx.init.entity.Root;
 import pers.mtx.mt.Crud;
 import pers.mtx.mt.data.sql.MtDelSql;
 import pers.mtx.mt.data.sql.entity.DelParams;
+import pers.mtx.util.BeanMapper;
+import pers.mtx.util.LogUtil;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
+import java.util.Objects;
 
 public class MtDel implements Crud {
     @Override
-    public String make(String uri,byte[] content) throws IOException, SQLException {
+    public String make(String uri,byte[] content) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         String[] split = uri.replaceFirst("/mt/","").split("/");
         DelParams delParams = mapper.readValue(content, DelParams.class);
-        delParams.setDbName(Root.getNodeName(Integer.valueOf(split[0])));
-        delParams.setTbName(Root.getNodeName(Integer.valueOf(split[1])));
+        delParams.setDbName(split[0]);
+        delParams.setTbName(split[1]);
 
+        return execSql(delParams);
+    }
+
+    @Override
+    public String make(pers.mtx.grpc.mtcrud.DelParams getParamsProt) {
+        DelParams params = BeanMapper.map(getParamsProt, DelParams.class);
+        try {
+            return execSql(params);
+        }catch (Exception e){
+            LogUtil.getExceptionInfo(e);
+        }
+        return "f";
+    }
+
+    /**
+     * 执行删除操作sql
+     * @param delParams 删除参数
+     * @return t或者f
+     */
+    private String execSql(DelParams delParams) {
         String sql = MtDelSql.spliceSql(delParams);
         PoolConnection poolConnection = DataSourceImpl.getConnection();
-        Statement statement = poolConnection.getConnect().createStatement();
-        try {
+        try (Statement statement = poolConnection.getConnect().createStatement()) {
             statement.executeUpdate(sql);
             return "t";
         }catch (Exception e){
@@ -36,20 +56,4 @@ public class MtDel implements Crud {
         }
     }
 
-    private static void mapToString(HashMap<String,String> params, StringBuilder sb, String ins) {
-        if (sb.indexOf(" where ")==-1) sb.append(" where ");
-        params.forEach((key, value) -> sb.append("`").append(Root.getNodeName(Integer.valueOf(key))).append("`").append(ins).append(formatValue(key,value)).append(" and "));
-    }
-
-    private static void likeMapToString(HashMap<String,String> params, StringBuilder sb,String ins) {
-        if (sb.indexOf(" where ")==-1) sb.append(" where ");
-        params.forEach((key, value) -> sb.append("`").append(Root.getNodeName(Integer.valueOf(key))).append("`").append(ins).append("'").append(value).append("'").append(" and "));
-    }
-
-    public static String formatValue(String rank,String value){
-        String type = Root.getColType(Integer.valueOf(rank));
-        //System.out.println(rank+";"+value+";"+type);
-        if (type.equals("varchar")) return "'"+value+"'";
-        return value;
-    }
 }

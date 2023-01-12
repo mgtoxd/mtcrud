@@ -1,13 +1,13 @@
 package pers.mtx.mt.crud;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import pers.mtx.connect.DataSourceImpl;
 import pers.mtx.connect.PoolConnection;
-import pers.mtx.init.entity.Root;
 import pers.mtx.mt.Crud;
 import pers.mtx.mt.data.sql.MtPutSql;
 import pers.mtx.mt.data.sql.entity.PutParams;
+import pers.mtx.util.BeanMapper;
+import pers.mtx.util.LogUtil;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -21,8 +21,28 @@ public class MtPut implements Crud {
         String[] split = uri.replaceFirst("/mt/","").split("/");
 
         PutParams params = mapper.readValue(content, PutParams.class);
-        params.setDbName(Root.getNodeName(Integer.valueOf(split[0])));
-        params.setTbName(Root.getNodeName(Integer.valueOf(split[1])));
+        params.setDbName(split[0]);
+        params.setTbName(split[1]);
+        return execSql(params);
+    }
+
+    @Override
+    public String make(pers.mtx.grpc.mtcrud.PutParams getParamsProt) {
+        PutParams params = BeanMapper.map(getParamsProt, PutParams.class);
+        try {
+            return execSql(params);
+        }catch (Exception e){
+            LogUtil.getExceptionInfo(e);
+        }
+        return "f";
+    }
+
+    /**
+     * 执行update操作sql
+     * @param params 修改参数
+     * @return t或者f
+     */
+    private String execSql(PutParams params) throws SQLException {
         String sql = MtPutSql.spliceSql(params);
 
         PoolConnection connection = DataSourceImpl.getConnection();
@@ -38,6 +58,5 @@ public class MtPut implements Crud {
         }finally {
             connection.releaseConnect();
         }
-
     }
 }

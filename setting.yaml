@@ -8,3 +8,4 @@ data:
   timeout: 2000
 server:
   port: 8080
+  grpc_port: 8081

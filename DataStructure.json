@@ -6,22 +6,43 @@
 			"tables":[
 				{
 					"rank":1,
-					"tableName":"test",
+					"tableName":"testRowid",
 					"cols":[
 						{
 							"rank":2,
-							"colName":"content1",
-							"dataType":"varchar"
+							"colName":"aaa",
+							"dataType":"bigint"
 						},
 						{
 							"rank":3,
-							"colName":"content2",
+							"colName":"bbb",
 							"dataType":"varchar"
+						}
+					]
+				},
+				{
+					"rank":4,
+					"tableName":"ttttt",
+					"cols":[
+						{
+							"rank":5,
+							"colName":"aaa",
+							"dataType":"int"
 						},
 						{
-							"rank":4,
-							"colName":"id",
-							"dataType":"varchar"
+							"rank":6,
+							"colName":"adadad",
+							"dataType":"int"
+						},
+						{
+							"rank":7,
+							"colName":"adawdaw",
+							"dataType":"int"
+						},
+						{
+							"rank":8,
+							"colName":"dadada",
+							"dataType":"int"
 						}
 					]
 				}
