@@ -104,7 +104,7 @@
   > ```
 ##### grpc请求
 
-[grpc文件]:https://github.com/mgtoxd/mtcrud/blob/master/src/main/proto/mtcrud.proto
+[grpc文件](https://github.com/mgtoxd/mtcrud/blob/master/src/main/proto/mtcrud.proto)
 
 * GetData 查询
 * PostData 增加
