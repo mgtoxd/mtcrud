@@ -2,7 +2,6 @@ package pers.mtx.mt.crud;
 
 import pers.mtx.connect.DataSourceImpl;
 import pers.mtx.connect.PoolConnection;
-import pers.mtx.init.entity.Root;
 import pers.mtx.mt.Crud;
 import pers.mtx.mt.data.sql.MtGetSql;
 import pers.mtx.mt.data.sql.entity.GetParams;
@@ -13,7 +12,9 @@ import pers.mtx.util.ResultSetConvertUtil;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MGet implements Crud {
@@ -25,7 +26,7 @@ public class MGet implements Crud {
         String[] split = uri.replaceFirst("/mget/", "").split("/");
         value.setDbName(split[0]);
         value.setTbName(split[1]);
-        List<String> cols = Arrays.stream(split[2].split("/?")[0].split(";")).map(e -> Root.getNodeName(Integer.valueOf(e))).collect(Collectors.toList());
+        List<String> cols = Arrays.stream(split[2].split(";")).collect(Collectors.toList());
 
         value.setCols(cols);
 

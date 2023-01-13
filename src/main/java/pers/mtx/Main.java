@@ -12,6 +12,7 @@ import io.netty.util.ResourceLeakDetector;
 import pers.mtx.Handler.filterHandler;
 import pers.mtx.init.DataStructure;
 import pers.mtx.service.MtCrudGrpcServiceImpl;
+import pers.mtx.util.LogUtil;
 import pers.mtx.util.YmlUtil;
 
 import java.io.IOException;
@@ -23,13 +24,13 @@ public class Main {
         try {
             structure.getDataStructure();
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtil.getExceptionInfo(e);
+            System.out.println("数据库初始化失败");
         }
         NioEventLoopGroup boss = new NioEventLoopGroup(1);
         NioEventLoopGroup worker = new NioEventLoopGroup(16);
         ServerBootstrap bootstrap = new ServerBootstrap();
         ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.ADVANCED);
-        System.out.println("wda");
         bootstrap.channel(NioServerSocketChannel.class)
                 .group(boss, worker)
                 .childHandler(new ChannelInitializer<SocketChannel>() {

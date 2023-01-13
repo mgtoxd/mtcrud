@@ -1,0 +1,152 @@
+GET http://localhost:{{httpPort}}/mt/0/1/2;3
+Accept: application/json
+
+###
+POST http://localhost:{{httpPort}}/mget/0/1/2;3
+Content-Type: application/json
+
+{
+  "eq": {
+    "2": "15616"
+  }
+}
+
+###
+POST http://localhost:{{httpPort}}/mt/0/1
+Content-Type: application/json
+
+{
+  "id": "2",
+  "valueMap": [
+    {"3": "aaaaaa"}
+  ]
+}
+
+###
+PUT http://localhost:{{httpPort}}/mt/0/1
+Content-Type: application/json
+
+{
+  "condition": {
+    "eq": {
+      "2": "1613503416280158208"
+    }
+  },
+  "valueMap": [
+    {
+      "3": "bbaaa"
+    }
+  ]
+}
+
+
+###
+DELETE http://localhost:{{httpPort}}/mt/0/1
+Content-Type: application/json
+
+{
+  "eq": {
+    "2": "15616"
+  }
+}
+
+
+###
+GRPC localhost:{{grpcPort}}/mtCrud.MtCrud/GetData
+
+{
+  "order": null,
+  "limit": "2",
+  "cols": [
+    "3"
+  ],
+  "eq":{
+    "2": "1613503416280158208"
+  },
+  "gt": null,
+  "lt": null,
+  "like": null,
+  "dbName": "0",
+  "tbName": "1"
+}
+
+###
+GRPC localhost:{{grpcPort}}/mtCrud.MtCrud/PostData
+
+{
+  "id": "2",
+  "ct": "",
+  "ut": "",
+  "valueMap": {
+    "3": "5"
+  },
+  "dbName": "0",
+  "tbName": "1"
+}
+<> 2023-01-12T201025.OK.json
+
+###
+GRPC localhost:{{grpcPort}}/mtCrud.MtCrud/PutData
+
+{
+  "condition":{
+    "eq":{
+      "2":"2"
+    },
+    "gt":{
+    },
+    "lt":{
+    },
+    "like":{
+    }
+  },
+  "valueMap":{
+    "4":"4"
+  },
+  "dbName": "0",
+  "tbName": "1"
+}
+
+###
+GRPC localhost:8081/mtCrud.MtCrud/DelData
+
+{
+  "eq":{
+    "列代码":"列代码值",
+  },
+  "gt":{
+    "列代码":"列代码大于的值",
+  },
+  "lt":{
+    "列代码":"列代码小于的值",
+  },
+  "like":{
+    "列代码":"列代码like的值 例如“mt%”",
+  },
+}
+
+
+###
+GRPC localhost:8081/mtCrud.MtCrud/ATDelData
+
+{
+  "dbName": "0",
+  "tbName": "1",
+  "eq":{
+    "2":"4"
+  }
+}
+
+###
+GRPC localhost:8081/mtCrud.MtCrud/ConfirmAT
+
+{
+  "ATId": "1612009362434428928"
+}
+
+###
+GRPC localhost:8081/mtCrud.MtCrud/RollbackAT
+
+{
+  "ATId": "1612005145183391744"
+}

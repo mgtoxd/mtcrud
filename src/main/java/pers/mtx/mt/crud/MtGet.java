@@ -1,9 +1,7 @@
 package pers.mtx.mt.crud;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import pers.mtx.connect.DataSourceImpl;
 import pers.mtx.connect.PoolConnection;
-import pers.mtx.init.entity.Root;
 import pers.mtx.mt.Crud;
 import pers.mtx.mt.data.sql.MtGetSql;
 import pers.mtx.mt.data.sql.entity.GetParams;
@@ -19,14 +17,13 @@ import java.util.stream.Collectors;
 public class MtGet implements Crud {
     @Override
     public String make(String uri, byte[] content) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
         //解析content
-        GetParams value = mapper.readValue(content, GetParams.class);
+        GetParams value =new GetParams();
         //解析uri
         String[] split = uri.replaceFirst("/mt/", "").split("/");
         value.setDbName(split[0]);
         value.setTbName(split[1]);
-        List<String> cols = Arrays.stream(split[2].split("/?")[0].split(";")).map(e -> Root.getNodeName(Integer.valueOf(e))).collect(Collectors.toList());
+        List<String> cols = Arrays.stream(split[2].split(";")).collect(Collectors.toList());
         try {
             if (split.length > 3) {
                 // 有分页
