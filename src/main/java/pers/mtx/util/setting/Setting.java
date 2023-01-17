@@ -4,6 +4,7 @@ package pers.mtx.util.setting;
 public class Setting {
     private Data data;
     private Server server;
+    private RocketConfig rocketmq;
 }
 
 

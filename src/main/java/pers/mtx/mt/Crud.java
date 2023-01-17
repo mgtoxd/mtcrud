@@ -30,7 +30,7 @@ public interface Crud {
     }
 
     /**
-     * (AT/GRPC) 执行增加请求
+     * (AT或GRPC) 执行增加请求
      * @param postParams grpc 增加参数
      * @return t/f
      */
@@ -39,7 +39,7 @@ public interface Crud {
     }
 
     /**
-     * (AT/GRPC) 执行修改请求
+     * (AT或GRPC) 执行修改请求
      * @param putParams grpc 更新参数
      * @return t/f
      */
@@ -48,11 +48,12 @@ public interface Crud {
     }
 
     /**
-     * (AT/GRPC) 执行删除请求
+     * (AT或GRPC) 执行删除请求
      * @param delParams grpc 删除参数
      * @return t/f
      */
     default String make(DelParams delParams){
         return null;
     }
+
 }

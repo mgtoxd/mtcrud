@@ -9,5 +9,4 @@ public class Data {
     private int maxSize;
     private int stepSize;
     private int timeout;
-
 }

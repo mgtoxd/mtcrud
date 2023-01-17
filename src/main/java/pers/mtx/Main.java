@@ -7,8 +7,10 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.http.*;
+import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.util.ResourceLeakDetector;
+import org.apache.rocketmq.client.apis.ClientException;
 import pers.mtx.Handler.filterHandler;
 import pers.mtx.init.DataStructure;
 import pers.mtx.service.MtCrudGrpcServiceImpl;
@@ -16,9 +18,12 @@ import pers.mtx.util.LogUtil;
 import pers.mtx.util.YmlUtil;
 
 import java.io.IOException;
+import java.util.Objects;
+
+import static pers.mtx.service.RocketMqServ.initRocketMqServ;
 
 public class Main {
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws IOException, InterruptedException, ClientException {
 
         DataStructure structure = new DataStructure();
         try {
@@ -49,7 +54,13 @@ public class Main {
                 .addService(new MtCrudGrpcServiceImpl())
                 .build().start();
         System.out.printf("GRpc服务端启动成功, 端口号: %d.%n", YmlUtil.getSetting().getServer().getGrpc_port());
+
+        if (Objects.nonNull(YmlUtil.getSetting().getRocketmq())){
+            initRocketMqServ();
+        }
         server.awaitTermination();
     }
+
+
 
 }

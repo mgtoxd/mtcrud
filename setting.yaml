@@ -9,3 +9,8 @@ data:
 server:
   port: 8180
   grpc_port: 8181
+rocketmq:
+  mqEndPoints: localhost:8081
+  tag: messageTag
+  topic: TestRCTTopic
+  consumerGroup: YourConsumerGroup
