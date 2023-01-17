@@ -6,8 +6,8 @@
 #### 使用
 
 1. 使用 Releases 中的二进制文件
-2. 编写 setting.yaml，与二进制文件在同一目录下
-   [setting样例]:https://github.com/mgtoxd/mtcrud/blob/master/setting.yaml
+2. 编写 setting.yaml，与二进制文件在同一目录下 
+   [setting样例](https://github.com/mgtoxd/mtcrud/blob/master/setting.yaml)
 3. 运行二进制文件
 4. 生成 DataStructure.json 包含数据库和表的代码
 
@@ -104,7 +104,7 @@
   > ```
 ##### grpc请求
 
-[grpc文件]:https://github.com/mgtoxd/mtcrud/blob/master/src/main/proto/mtcrud.proto
+[grpc文件](https://github.com/mgtoxd/mtcrud/blob/master/src/main/proto/mtcrud.proto)
 
 * GetData 查询
 * PostData 增加
