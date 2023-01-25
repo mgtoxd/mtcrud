@@ -20,6 +20,7 @@ import pers.mtx.util.YmlUtil;
 import java.io.IOException;
 import java.util.Objects;
 
+import static pers.mtx.service.NacosServ.InitNacos;
 import static pers.mtx.service.RocketMqServ.initRocketMqServ;
 
 public class Main {
@@ -55,8 +56,13 @@ public class Main {
                 .build().start();
         System.out.printf("GRpc服务端启动成功, 端口号: %d.%n", YmlUtil.getSetting().getServer().getGrpc_port());
 
+        // 启动rocketmq对接
         if (Objects.nonNull(YmlUtil.getSetting().getRocketmq())){
             initRocketMqServ();
+        }
+
+        if (Objects.nonNull(YmlUtil.getSetting().getNacos())){
+            InitNacos();
         }
         server.awaitTermination();
     }

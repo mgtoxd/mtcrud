@@ -5,6 +5,8 @@ public class Setting {
     private Data data;
     private Server server;
     private RocketConfig rocketmq;
+
+    private NacosConfig nacos;
 }
 
 

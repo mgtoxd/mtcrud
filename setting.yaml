@@ -9,8 +9,14 @@ data:
 server:
   port: 8180
   grpc_port: 8181
-rocketmq:
-  mqEndPoints: localhost:8081
-  tag: messageTag
-  topic: TestRCTTopic
-  consumerGroup: YourConsumerGroup
+#rocketmq:
+#  mqEndPoints: localhost:8081
+#  tag: messageTag
+#  topic: TestRCTTopic
+#  consumerGroup: YourConsumerGroup
+nacos:
+  nacosIp: 127.0.0.1
+  nacosPort: 8848
+  servName: test
+  nameSpace: 9a257b9e-be7b-4c0e-93cf-d677d2372716
+  networkCardName: enp4s0
