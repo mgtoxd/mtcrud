@@ -1,0 +1,4 @@
+# key 不可以为mt,mget
+a: select * from testRowid where aaa={id};
+
+b: update testRowid set bbb=3 where aaa = {id};

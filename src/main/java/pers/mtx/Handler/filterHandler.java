@@ -2,11 +2,16 @@ package pers.mtx.Handler;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.handler.codec.http.*;
+import io.netty.handler.codec.http.DefaultFullHttpResponse;
+import io.netty.handler.codec.http.FullHttpRequest;
+import io.netty.handler.codec.http.HttpResponseStatus;
 import pers.mtx.mt.Crud;
 import pers.mtx.mt.CrudFactory;
+import pers.mtx.service.CustomServ;
+import pers.mtx.util.YmlUtil;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 import static io.netty.handler.codec.http.HttpHeaderNames.CONTENT_LENGTH;
 
@@ -42,11 +47,12 @@ public class filterHandler extends ChannelInboundHandlerAdapter {
             ctx.writeAndFlush(response);
             ctx.close();
         } else {
-            //其余操作
+            //自定义接口
             DefaultFullHttpResponse response = new DefaultFullHttpResponse(fullRequest.protocolVersion(), HttpResponseStatus.OK);
-            byte[] bytes = "<h1>hello</h1>".getBytes(StandardCharsets.UTF_8);
-            response.headers().set(CONTENT_LENGTH, bytes.length);
-            response.content().writeBytes(bytes);
+            String sql = Objects.requireNonNull(YmlUtil.getSql()).get(uri.replaceFirst("/", ""));
+            byte[] rs = CustomServ.getInstance().executeCustomSql(sql, bytes1).getBytes(StandardCharsets.UTF_8);
+            response.headers().set(CONTENT_LENGTH, rs.length);
+            response.content().writeBytes(rs);
             ctx.writeAndFlush(response);
             ctx.close();
         }

@@ -150,3 +150,21 @@ GRPC localhost:8081/mtCrud.MtCrud/RollbackAT
 {
   "ATId": "1612005145183391744"
 }
+
+
+###
+POST http://localhost:{{httpPort}}/a
+Content-Type: application/json
+
+{
+  "id": "1613503416280158208"
+}
+
+
+###
+POST http://localhost:{{httpPort}}/b
+Content-Type: application/json
+
+{
+  "id": "1613508456717881344"
+}

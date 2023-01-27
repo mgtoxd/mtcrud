@@ -5,6 +5,7 @@ import pers.mtx.util.setting.Setting;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 
 
 /**
@@ -15,10 +16,14 @@ public class YmlUtil {
     }
 
     private static Setting setting;
+    private static HashMap sql;
 
     static {
         try {
             setting = new Yaml().loadAs(new FileInputStream(System.getProperty("user.dir")+"/setting.yaml"),Setting.class);
+            if (setting.getCustomSql()){
+                sql = new Yaml().loadAs(new FileInputStream(System.getProperty("user.dir")+"/sql.yaml"),HashMap.class);
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -26,5 +31,12 @@ public class YmlUtil {
 
     public static Setting getSetting(){
         return setting;
+    }
+
+    public static HashMap<String ,String > getSql() {
+        if (setting.getCustomSql()){
+            return sql;
+        }
+        return null;
     }
 }

@@ -1,7 +1,7 @@
 # MtCrud
 
 #### 介绍
-数据库的更抽象操作方式，支持HTTP和GRPC协议，并且支持AT模式的分布式事务，可用于简单项目的快速开发和大型分布式项目中数据库的操作
+数据库的更抽象操作方式，支持HTTP和GRPC协议，并且支持AT模式的分布式事务以及rocketmq的事务消息和普通消息，提供了简单注册到nacos的选项，可用于简单项目的快速开发和大型分布式项目中数据库的操作
 
 #### 使用
 
@@ -9,7 +9,7 @@
 2. 编写 setting.yaml，与二进制文件在同一目录下 
    [setting样例](https://github.com/mgtoxd/mtcrud/blob/master/setting.yaml)
 3. 运行二进制文件
-4. 生成 DataStructure.json 包含数据库和表的代码
+4. 生成 DataStructure.json 包含数据库和表的代码，同样的数据库，产生的 DataStructure.json 是相同的
 
 ##### HTTP请求
 

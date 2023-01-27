@@ -7,6 +7,8 @@ public class Setting {
     private RocketConfig rocketmq;
 
     private NacosConfig nacos;
+
+    private Boolean customSql;
 }
 
 
