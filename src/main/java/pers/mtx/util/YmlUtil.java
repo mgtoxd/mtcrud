@@ -23,6 +23,7 @@ public class YmlUtil {
             setting = new Yaml().loadAs(new FileInputStream(System.getProperty("user.dir")+"/setting.yaml"),Setting.class);
             if (setting.getCustomSql()){
                 sql = new Yaml().loadAs(new FileInputStream(System.getProperty("user.dir")+"/sql.yaml"),HashMap.class);
+                System.out.println("扫描到自定义sql"+sql.size()+"条");
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

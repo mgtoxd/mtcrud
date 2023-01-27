@@ -3,9 +3,17 @@
 #### 介绍
 数据库的更抽象操作方式，支持HTTP和GRPC协议，并且支持AT模式的分布式事务以及rocketmq的事务消息和普通消息，提供了简单注册到nacos的选项，可用于简单项目的快速开发和大型分布式项目中数据库的操作
 
+#### 功能
+
+1. 使用http请求和GRPC请求操作数据库，无需编写Sql。
+2. AT模式分布式事务（仅支持GRPC）。
+3. 支持RocketMq事务消息。
+4. 通过配置文件自定义Sql语句和接口。
+5. 支持通过编写配置文件注册到Nacos。
+
 #### 使用
 
-1. 使用 Releases 中的二进制文件
+1. 使用 Releases 中的二进制文件(或使用jar文件)
 2. 编写 setting.yaml，与二进制文件在同一目录下 
    [setting样例](https://github.com/mgtoxd/mtcrud/blob/master/setting.yaml)
 3. 运行二进制文件

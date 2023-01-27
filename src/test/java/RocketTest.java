@@ -55,7 +55,7 @@ public class RocketTest {
             //事务分支开启失败，直接退出。
             return;
         }
-        PostParams build = PostParams.newBuilder().setId("2").setDbName("0").setTbName("1").putValueMap("3","7777").build();
+        PostParams build = PostParams.newBuilder().setId("2").setDbName("0").setTbName("1").putValueMap("3","777adadad7").build();
 
         Message message = messageBuilder.setTopic(topic)
                 //设置消息索引键，可根据关键字精确查找某条消息。

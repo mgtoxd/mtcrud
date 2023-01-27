@@ -49,7 +49,7 @@ public class Main {
                         ;
                     }
                 }).bind(YmlUtil.getSetting().getServer().getPort());
-        System.out.println("Gprc正在启动");
+        System.out.println("HTTP服务启动成功，端口号："+ YmlUtil.getSetting().getServer().getPort());
         Server server = ServerBuilder.
                 forPort(YmlUtil.getSetting().getServer().getGrpc_port())
                 .addService(new MtCrudGrpcServiceImpl())
@@ -59,10 +59,12 @@ public class Main {
         // 启动rocketmq对接
         if (Objects.nonNull(YmlUtil.getSetting().getRocketmq())){
             initRocketMqServ();
+            System.out.println("RocketMq对接成功");
         }
 
         if (Objects.nonNull(YmlUtil.getSetting().getNacos())){
             InitNacos();
+            System.out.println("Nacos注册成功");
         }
         server.awaitTermination();
     }

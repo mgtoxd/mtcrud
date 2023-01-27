@@ -7,7 +7,7 @@ Content-Type: application/json
 
 {
   "eq": {
-    "2": "15616"
+    "2": "1613508462904479744"
   }
 }
 
@@ -18,7 +18,7 @@ Content-Type: application/json
 {
   "id": "2",
   "valueMap": [
-    {"3": "aaaaaa"}
+    {"3": "adadada"}
   ]
 }
 
@@ -29,12 +29,12 @@ Content-Type: application/json
 {
   "condition": {
     "eq": {
-      "2": "1613503416280158208"
+      "2": "1618868532567740416"
     }
   },
   "valueMap": [
     {
-      "3": "bbaaa"
+      "3": "bbaaaaaaaaaaaaaaaa"
     }
   ]
 }
@@ -46,7 +46,7 @@ Content-Type: application/json
 
 {
   "eq": {
-    "2": "15616"
+    "2": "1618868532567740416"
   }
 }
 
@@ -91,7 +91,7 @@ GRPC localhost:{{grpcPort}}/mtCrud.MtCrud/PutData
 {
   "condition":{
     "eq":{
-      "2":"2"
+      "2":"1613508595301879808"
     },
     "gt":{
     },
@@ -101,54 +101,53 @@ GRPC localhost:{{grpcPort}}/mtCrud.MtCrud/PutData
     }
   },
   "valueMap":{
-    "4":"4"
+    "3":"132132"
   },
   "dbName": "0",
   "tbName": "1"
 }
 
 ###
-GRPC localhost:8081/mtCrud.MtCrud/DelData
-
-{
-  "eq":{
-    "列代码":"列代码值",
-  },
-  "gt":{
-    "列代码":"列代码大于的值",
-  },
-  "lt":{
-    "列代码":"列代码小于的值",
-  },
-  "like":{
-    "列代码":"列代码like的值 例如“mt%”",
-  },
-}
-
-
-###
-GRPC localhost:8081/mtCrud.MtCrud/ATDelData
+GRPC localhost:{{grpcPort}}/mtCrud.MtCrud/DelData
 
 {
   "dbName": "0",
   "tbName": "1",
   "eq":{
-    "2":"4"
+    "2":"1613508595301879808"
+  },
+  "gt":{
+  },
+  "lt":{
+  },
+  "like":{
+  }
+}
+
+
+###
+GRPC localhost:{{grpcPort}}/mtCrud.MtCrud/ATDelData
+
+{
+  "dbName": "0",
+  "tbName": "1",
+  "eq":{
+    "2":"1613503416280158208"
   }
 }
 
 ###
-GRPC localhost:8081/mtCrud.MtCrud/ConfirmAT
+GRPC localhost:{{grpcPort}}/mtCrud.MtCrud/ConfirmAT
 
 {
   "ATId": "1612009362434428928"
 }
 
 ###
-GRPC localhost:8081/mtCrud.MtCrud/RollbackAT
+GRPC localhost:{{grpcPort}}/mtCrud.MtCrud/RollbackAT
 
 {
-  "ATId": "1612005145183391744"
+  "ATId": "1618869752908877824"
 }
 
 
@@ -166,5 +165,5 @@ POST http://localhost:{{httpPort}}/b
 Content-Type: application/json
 
 {
-  "id": "1613508456717881344"
+  "id": "1613503416280158208"
 }
